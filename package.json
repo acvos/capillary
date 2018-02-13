@@ -6,7 +6,8 @@
   "scripts": {
     "compile": "rm -rf dist/* && babel --presets env --plugins transform-object-rest-spread -d dist/ src/",
     "test": "mocha --require babel-register test/**/*.test.js",
-    "example": "babel-node --presets env --plugins transform-object-rest-spread examples/http-data.js"
+    "example": "babel-node --presets env --plugins transform-object-rest-spread examples/http-data.js",
+    "selector": "babel-node --presets env --plugins transform-object-rest-spread examples/selector.js"
   },
   "main": "dist",
   "repository": {
@@ -37,7 +38,8 @@
     "poly-exclude": "^1.0.4",
     "poly-filter": "^1.0.2",
     "poly-map": "^1.1.0",
-    "poly-select": "^1.0.0"
+    "poly-select": "^1.0.0",
+    "uuid": "^3.2.1"
   },
   "engines": {
     "node": ">=4.0",

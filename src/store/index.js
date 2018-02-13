@@ -21,6 +21,7 @@ export const extend     = (...args) => getStore().extend(...args)
 export const combine    = (...args) => getStore().combine(...args)
 export const get        = (...args) => getStore().get(...args)
 export const set        = (...args) => getStore().set(...args)
+export const trace      = (...args) => getStore().trace(...args)
 
 const message = construct
 message.isInstance = isInstance

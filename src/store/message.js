@@ -1,8 +1,9 @@
 import { read, write } from '../path'
 
-function Message(data, scope) {
+function Message(data, scope, log) {
   this.data = data
   this.scope = scope || {}
+  this.log = log || []
 }
 
 export const isInstance = data => data instanceof Message
@@ -22,8 +23,11 @@ export const collapse = input => (isInstance(input)
   :  ({ data: input, scope: {} })
 )
 
-export const combine = (input, output) =>
-  construct(output.data, { ...input.scope, ...output.scope })
+export const combine = (input, output) => new Message(
+  output.data,
+  { ...input.scope, ...output.scope },
+  input.log.concat(output.log)
+)
 
 export const extend = func => input =>
   combine(input, construct(func(input)))
@@ -39,8 +43,16 @@ export const get = (location, input) => {
     value = read(path, input.scope)
   }
 
-  return construct(value, input.scope)
+  return new Message(value, input.scope, input.log)
 }
 
 export const set = (location, value, input) =>
   construct(input.data, write(extract(location), extract(value), input.scope))
+
+export const trace = span => input => {
+  // console.log(input)
+  const output = construct(input)
+  output.log = output.log.concat([span])
+
+  return output
+}
