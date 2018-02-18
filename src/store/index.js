@@ -24,6 +24,7 @@ export const set        = (...args) => getStore().set(...args)
 
 const message = construct
 message.isInstance = isInstance
+message.isInstance = isInstance
 message.construct = construct
 message.extract = extract
 message.extend = extend

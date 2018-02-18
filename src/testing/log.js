@@ -1,9 +1,11 @@
+import { extract } from '../store'
+
 const log = input => {
   if (input instanceof Promise) {
     return input.then(log)
   }
 
-  console.log(input)
+  console.log(extract(input))
 
   return input
 }
