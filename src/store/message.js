@@ -4,7 +4,7 @@ function Message(layers) {
   this.layers = layers || []
 }
 
-const normalize = args => typeof args === 'object' ? args : { $$$: args }
+const normalize = args => typeof args === 'object' && args !== null ? args : { $$$: args }
 const denormalize = layer => layer.hasOwnProperty('$$$') ? layer.$$$ : layer
 
 export const isInstance = data => data instanceof Message
