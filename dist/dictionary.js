@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.filter = exports.map = exports.either = exports.when = exports.all = exports.chain = exports.slice = exports.merge = exports.exclude = exports.select = exports.push = exports.concat = exports.zip = exports.count = exports.tail = exports.head = exports.keys = exports.values = exports.array = exports.isUndefined = exports.isDefined = exports.lte = exports.gte = exports.lt = exports.gt = exports.neq = exports.eq = exports.split = exports.join = exports.lowercase = exports.uppercase = exports.divide = exports.multiply = exports.subtract = exports.add = exports.xor = exports.or = exports.and = exports.not = exports.end = exports.id = exports.data = exports.lens = exports.set = exports.get = exports.call = exports.lift = undefined;
+exports.filter = exports.map = exports.either = exports.when = exports.all = exports.chain = exports.slice = exports.merge = exports.exclude = exports.select = exports.push = exports.concat = exports.zip = exports.count = exports.tail = exports.head = exports.keys = exports.values = exports.isUndefined = exports.isDefined = exports.lte = exports.gte = exports.lt = exports.gt = exports.neq = exports.eq = exports.split = exports.join = exports.lowercase = exports.uppercase = exports.divide = exports.multiply = exports.subtract = exports.add = exports.xor = exports.or = exports.and = exports.not = exports.end = exports.id = exports.data = exports.lens = exports.set = exports.get = exports.call = exports.lift = undefined;
 
 var _functionPipe = require('function-pipe');
 
@@ -78,7 +78,6 @@ var gte = exports.gte = lift(essentials.gte);
 var lte = exports.lte = lift(essentials.lte);
 var isDefined = exports.isDefined = lift(essentials.isDefined);
 var isUndefined = exports.isUndefined = lift(essentials.isUndefined);
-var array = exports.array = lift(essentials.array);
 var values = exports.values = lift(essentials.values);
 var keys = exports.keys = lift(essentials.keys);
 var head = exports.head = lift(essentials.head);

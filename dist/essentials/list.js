@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.slice = exports.merge = exports.exclude = exports.select = exports.push = exports.concat = exports.tail = exports.head = exports.count = exports.zip = exports.keys = exports.values = exports.join = exports.array = undefined;
+exports.slice = exports.merge = exports.exclude = exports.select = exports.push = exports.concat = exports.tail = exports.head = exports.count = exports.zip = exports.keys = exports.values = exports.join = undefined;
 
 var _polySelect = require('poly-select');
 
@@ -19,13 +19,6 @@ var _zip2 = _interopRequireDefault(_zip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var array = exports.array = function array() {
-  for (var _len = arguments.length, xs = Array(_len), _key = 0; _key < _len; _key++) {
-    xs[_key] = arguments[_key];
-  }
-
-  return xs.slice(0, xs.length - 1);
-};
 var join = exports.join = function join(x, ys) {
   return ys.join(x);
 };
@@ -36,7 +29,7 @@ var keys = exports.keys = function keys(xs) {
   return Object.keys(xs);
 };
 var zip = exports.zip = function zip(keys, values) {
-  return (0, _zip2.default)(kes, values);
+  return (0, _zip2.default)(keys, values);
 };
 var count = exports.count = function count(xs) {
   return Object.values(xs).length;

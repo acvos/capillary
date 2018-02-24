@@ -9,38 +9,57 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _path = require('../path');
 
-function Message(data, scope) {
-  this.data = data;
-  this.scope = scope || {};
+var _isObject = require('../utils/is-object');
+
+var _isObject2 = _interopRequireDefault(_isObject);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function Message(layers) {
+  this.layers = layers || [];
 }
+
+var normalize = function normalize(args) {
+  return (0, _isObject2.default)(args) ? args : { $$$: args };
+};
+var denormalize = function denormalize(layer) {
+  return layer.hasOwnProperty('$$$') ? layer.$$$ : layer;
+};
 
 var isInstance = exports.isInstance = function isInstance(data) {
   return data instanceof Message;
 };
 
-var construct = exports.construct = function construct(data, scope) {
-  if (data instanceof Message) {
-    return data;
+var construct = exports.construct = function construct(data) {
+  for (var _len = arguments.length, scopes = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    scopes[_key - 1] = arguments[_key];
   }
 
-  return new Message(data, scope);
+  return isInstance(data) ? data : new Message([normalize(data)].concat(scopes));
 };
 
 var extract = exports.extract = function extract(input) {
-  return isInstance(input) ? input.data : input;
+  return isInstance(input) ? denormalize(input.layers[0]) : input;
 };
 
 var collapse = exports.collapse = function collapse(input) {
-  return isInstance(input) ? { data: input.data, scope: input.scope } : { data: input, scope: {} };
+  return isInstance(input) ? {
+    data: extract(input),
+    scope: input.layers.slice(1).reduce(function (acc, next) {
+      return _extends({}, acc, next);
+    }, {})
+  } : { data: input, scope: {} };
 };
 
 var combine = exports.combine = function combine(input, output) {
-  return construct(output.data, _extends({}, input.scope, output.scope));
+  return construct.apply(undefined, [output.layers[0]].concat(_toConsumableArray(output.layers.slice(1).concat(input.layers))));
 };
 
 var extend = exports.extend = function extend(func) {
   return function (input) {
-    return combine(input, construct(func(input)));
+    return construct.apply(undefined, [func(construct(input))].concat(_toConsumableArray(construct(input).layers.slice(1))));
   };
 };
 
@@ -50,14 +69,16 @@ var get = exports.get = function get(location, input) {
     return input;
   }
 
-  var value = (0, _path.read)(path, input.data);
-  if (value === undefined) {
-    value = (0, _path.read)(path, input.scope);
+  var i = void 0,
+      value = void 0;
+  for (i in input.layers) {
+    value = (0, _path.read)(path, input.layers[i]);
+    if (value !== undefined) break;
   }
 
-  return construct(value, input.scope);
+  return construct.apply(undefined, [value].concat(_toConsumableArray(input.layers.slice(1))));
 };
 
 var set = exports.set = function set(location, value, input) {
-  return construct(input.data, (0, _path.write)(extract(location), extract(value), input.scope));
+  return construct.apply(undefined, [input.layers[0], (0, _path.write)(extract(location), extract(value), {})].concat(_toConsumableArray(input.layers.slice(1))));
 };

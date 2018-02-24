@@ -70,6 +70,7 @@ var set = exports.set = function set() {
 
 var message = construct;
 message.isInstance = isInstance;
+message.isInstance = isInstance;
 message.construct = construct;
 message.extract = extract;
 message.extend = extend;
