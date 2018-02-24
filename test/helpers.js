@@ -1,5 +1,5 @@
 import expect from 'expect'
-import { message } from '../src'
+import { message, resolve } from '../src'
 import { anything } from './samples'
 
 const wrap = values => [
@@ -14,10 +14,6 @@ const forceArray = xs => (xs instanceof Array ? xs : [xs])
 
 const permutations = (inputs, flows) => wrap(forceSet(inputs))
   .reduce((acc, x) => acc.concat(forceArray(flows).map(f => f(x))), [])
-
-export const resolve = flow => Promise
-  .resolve(typeof flow === 'function' ? flow(message()) : flow)
-  .then(message.extract)
 
 export const verify = (given, flows, expected) => () => Promise
   .all(permutations(given, flows).map(resolve))
