@@ -24,10 +24,9 @@ const peopleHomeworlds = chain(
 // Fetch character names and homeworlds and then
 // filter the results by homeworld name
 const whosFrom = chain(
-  set('planet', get('')),
   peopleHomeworlds,
   filter(eq(get('homeworld'), get('planet')))
 )
 
 log(peopleHomeworlds()) // lists Star War characters with their homeworlds
-log(whosFrom('Tatooine')) // lists Star War characters from Tatooine
+log(whosFrom({ planet: 'Tatooine' })) // lists Star War characters from Tatooine

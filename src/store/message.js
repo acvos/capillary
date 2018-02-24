@@ -1,18 +1,18 @@
 import { read, write } from '../path'
+import isObject from '../utils/is-object'
 
 function Message(layers) {
   this.layers = layers || []
 }
 
-const normalize = args => typeof args === 'object' && args !== null ? args : { $$$: args }
+const normalize = args => isObject(args) ? args : ({ $$$: args })
 const denormalize = layer => layer.hasOwnProperty('$$$') ? layer.$$$ : layer
 
 export const isInstance = data => data instanceof Message
 
-export const construct = (data, ...scopes) => (isInstance(data)
+export const construct = (data, ...scopes) => isInstance(data)
   ? data
   : new Message([normalize(data), ...scopes])
-)
 
 export const extract = input => isInstance(input)
   ? denormalize(input.layers[0])
@@ -29,7 +29,7 @@ export const combine = (input, output) =>
   construct(output.layers[0], ...output.layers.slice(1).concat(input.layers))
 
 export const extend = func => input =>
-  construct(func(input), ...input.layers.slice(1))
+  construct(func(construct(input)), ...construct(input).layers.slice(1))
 
 export const get = (location, input) => {
   const path = extract(location)

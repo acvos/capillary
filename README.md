@@ -4,14 +4,10 @@ Context-dependent computation pipelines
 ## Description
 Express your code as functional pipelines and forget the differences between synchronous and asyncronous control flow!
 
-No callbacks, no promises, no sagas or thunks - same control flow fragments for everything:
-- Want to react on debounsed input change events? Sure.
-- Want to decide which API to fetch after some other API response is available? Easy!
-- Want to map a function over an API response? Why not!
+No callbacks, no promises, no sagas or thunks - same control flow  for syncronous and asyncronous data.
 
 ## Features
 - Simple control flow abstractions
-- Objects, arrays and primitive data doesn't require wrapper functions
 - Dynamic switching between different transport mechanisms
 - Ability to add any pure function to the pipeline with lifting
 - Easy automated testing and fuzzing
@@ -65,13 +61,12 @@ const peopleHomeworlds = chain(
 // Fetch character names and homeworlds and then
 // filter the results by homeworld name
 const whosFrom = chain(
-  set('planet', get('')),
   peopleHomeworlds,
   filter(eq(get('homeworld'), get('planet')))
 )
 
 log(peopleHomeworlds()) // lists Star War characters with their homeworlds
-log(whosFrom('Tatooine')) // lists Star War characters from Tatooine
+log(whosFrom({ planet: 'Tatooine' })) // lists Star War characters from Tatooine
 ```
 
 

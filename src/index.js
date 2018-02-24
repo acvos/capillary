@@ -17,4 +17,3 @@ configure({
 
 export { message, transport, fragment, collapse }
 export * from './dictionary'
-export * from './testing'

@@ -1,22 +1,11 @@
-import flatten from 'array-flatten'
-import { message } from '../src'
+export const objects  = new Set([{}, { propertyA: 'b' }, { propertyA: 100, propertyB: 'c' }, { propertyA: 100500, propertyB: '200300', propertyC: { propertyD: 2 } }])
+export const arrays   = new Set([[], [ 1, 2, 5, 7 ], [ 'abc', 123, true ]])
+export const numbers  = new Set([0, 1, 100500, 0.0, 1.5, -10])
+export const strings  = new Set(['', 'doge wow such much!', '12345', '0'])
+export const booleans = new Set([true, false])
+export const nullValues      = new Set([null])
+export const undefinedValues = new Set([undefined])
 
-export const sample = ({ data, scope }) => flatten(
-  scope.map(x => data.map(y => message(y, x)))
-)
-
-const objects  = [{}, { propertyA: 'b' }, { propertyA: 100, propertyB: 'c' }, { propertyA: 100500, propertyB: '200300', propertyC: { propertyD: 2 } }]
-const arrays   = [[], [ 1, 2, 5, 7 ], [ 'abc', 123, true ]]
-const numbers  = [0, 1, 100500, 0.0, 1.5, -10]
-const strings  = ['', 'doge wow such much!', '12345', '0']
-const booleans = [true, false]
-
-const primitives = [...numbers, ...strings, ...booleans]
-const definedValues = [null, ...primitives, ...objects, ...arrays]
-const any = [...definedValues, undefined]
-
-export const anything  =  sample({ data: any, scope: objects })
-export const defined   =  sample({ data: definedValues, scope: objects })
-export const unDefined =  sample({ data: [undefined], scope: objects })
-export const data  = x => sample({ data: [x], scope: objects })
-export const scope = x => sample({ data: any, scope: [x] })
+export const primitives      = new Set([...numbers, ...strings, ...booleans])
+export const definedValues   = new Set([...nullValues, ...primitives, ...objects, ...arrays])
+export const anything        = new Set([...definedValues, ...undefinedValues])
