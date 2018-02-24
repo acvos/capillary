@@ -13,6 +13,12 @@ describe('Array construction', () => {
     })
   })
 
+  describe('From constant object: f(*) -> [...]', () => {
+    objects.forEach(xs => {
+      it(`f = keys({${xs.join(', ')}})`, verify(anything, keys(xs), Object.keys(xs)))
+    })
+  })
+
   describe('Transparent to incoming arrays: f([...]) -> [...]', () => {
     arrays.forEach(xs => {
       const $xs = xs.join(', ')
