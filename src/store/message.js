@@ -5,8 +5,8 @@ function Message(layers) {
   this.layers = layers || []
 }
 
-const normalize = args => isObject(args) ? args : ({ $$$: args })
-const denormalize = layer => layer.hasOwnProperty('$$$') ? layer.$$$ : layer
+const normalize = args => isObject(args) ? args : ({ $$data: args })
+const denormalize = layer => layer.hasOwnProperty('$$data') ? layer.$$data : layer
 
 export const isInstance = data => data instanceof Message
 
@@ -43,7 +43,7 @@ export const get = (location, input) => {
     if (value !== undefined) break
   }
 
-  return construct(value, ...input.layers.slice(1))
+  return construct(value, ...input.layers)
 }
 
 export const set = (location, value, input) =>

@@ -1,6 +1,6 @@
 import https from 'https'
 import nodeFetch from 'node-fetch'
-import { lift, chain, get, set, map, filter, eq, object, log } from '../src'
+import { configure, message, lift, chain, get, set, map, filter, eq, object, log } from '../src'
 
 // Generic HTTP readers
 const agent = new https.Agent({ rejectUnauthorized: false })
